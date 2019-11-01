@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pan.dao.BlogMapper" >
+  <resultMap id="BaseResultMap" type="com.pan.pojo.Blog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="typeid" property="typeid" jdbcType="INTEGER" />
+    <result column="tagids" property="tagids" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="first_picture" property="firstPicture" jdbcType="VARCHAR" />
+    <result column="views" property="views" jdbcType="INTEGER" />
+    <result column="appreciation" property="appreciation" jdbcType="INTEGER" />
+    <result column="share_statement" property="shareStatement" jdbcType="INTEGER" />
+    <result column="commentabled" property="commentabled" jdbcType="INTEGER" />
+    <result column="published" property="published" jdbcType="INTEGER" />
+    <result column="flag" property="flag" jdbcType="VARCHAR" />
+    <result column="recommend" property="recommend" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pan.pojo.Blog" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, uid, typeid, tagids, title, description, first_picture, views, appreciation, 
+    share_statement, commentabled, published, flag, recommend, create_time, update_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pan.pojo.BlogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pan.pojo.BlogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from blog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from blog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pan.pojo.BlogExample" >
+    delete from blog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pan.pojo.Blog" keyProperty="id" useGeneratedKeys="true">
+    insert into blog (id, uid, typeid, 
+      tagids, title, description, 
+      first_picture, views, appreciation, 
+      share_statement, commentabled, published, 
+      flag, recommend, create_time, 
+      update_time, content)
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{typeid,jdbcType=INTEGER}, 
+      #{tagids,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{firstPicture,jdbcType=VARCHAR}, #{views,jdbcType=INTEGER}, #{appreciation,jdbcType=INTEGER}, 
+      #{shareStatement,jdbcType=INTEGER}, #{commentabled,jdbcType=INTEGER}, #{published,jdbcType=INTEGER}, 
+      #{flag,jdbcType=VARCHAR}, #{recommend,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pan.pojo.Blog" keyProperty="id" useGeneratedKeys="true">
+    insert into blog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="typeid != null" >
+        typeid,
+      </if>
+      <if test="tagids != null" >
+        tagids,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="firstPicture != null" >
+        first_picture,
+      </if>
+      <if test="views != null" >
+        views,
+      </if>
+      <if test="appreciation != null" >
+        appreciation,
+      </if>
+      <if test="shareStatement != null" >
+        share_statement,
+      </if>
+      <if test="commentabled != null" >
+        commentabled,
+      </if>
+      <if test="published != null" >
+        published,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="recommend != null" >
+        recommend,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="typeid != null" >
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="tagids != null" >
+        #{tagids,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPicture != null" >
+        #{firstPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="views != null" >
+        #{views,jdbcType=INTEGER},
+      </if>
+      <if test="appreciation != null" >
+        #{appreciation,jdbcType=INTEGER},
+      </if>
+      <if test="shareStatement != null" >
+        #{shareStatement,jdbcType=INTEGER},
+      </if>
+      <if test="commentabled != null" >
+        #{commentabled,jdbcType=INTEGER},
+      </if>
+      <if test="published != null" >
+        #{published,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null" >
+        #{recommend,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pan.pojo.BlogExample" resultType="java.lang.Integer" >
+    select count(*) from blog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update blog
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.typeid != null" >
+        typeid = #{record.typeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.tagids != null" >
+        tagids = #{record.tagids,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstPicture != null" >
+        first_picture = #{record.firstPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.views != null" >
+        views = #{record.views,jdbcType=INTEGER},
+      </if>
+      <if test="record.appreciation != null" >
+        appreciation = #{record.appreciation,jdbcType=INTEGER},
+      </if>
+      <if test="record.shareStatement != null" >
+        share_statement = #{record.shareStatement,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentabled != null" >
+        commentabled = #{record.commentabled,jdbcType=INTEGER},
+      </if>
+      <if test="record.published != null" >
+        published = #{record.published,jdbcType=INTEGER},
+      </if>
+      <if test="record.flag != null" >
+        flag = #{record.flag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommend != null" >
+        recommend = #{record.recommend,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update blog
+    set id = #{record.id,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      typeid = #{record.typeid,jdbcType=INTEGER},
+      tagids = #{record.tagids,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      first_picture = #{record.firstPicture,jdbcType=VARCHAR},
+      views = #{record.views,jdbcType=INTEGER},
+      appreciation = #{record.appreciation,jdbcType=INTEGER},
+      share_statement = #{record.shareStatement,jdbcType=INTEGER},
+      commentabled = #{record.commentabled,jdbcType=INTEGER},
+      published = #{record.published,jdbcType=INTEGER},
+      flag = #{record.flag,jdbcType=VARCHAR},
+      recommend = #{record.recommend,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update blog
+    set id = #{record.id,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      typeid = #{record.typeid,jdbcType=INTEGER},
+      tagids = #{record.tagids,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      first_picture = #{record.firstPicture,jdbcType=VARCHAR},
+      views = #{record.views,jdbcType=INTEGER},
+      appreciation = #{record.appreciation,jdbcType=INTEGER},
+      share_statement = #{record.shareStatement,jdbcType=INTEGER},
+      commentabled = #{record.commentabled,jdbcType=INTEGER},
+      published = #{record.published,jdbcType=INTEGER},
+      flag = #{record.flag,jdbcType=VARCHAR},
+      recommend = #{record.recommend,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pan.pojo.Blog" >
+    update blog
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="typeid != null" >
+        typeid = #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="tagids != null" >
+        tagids = #{tagids,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPicture != null" >
+        first_picture = #{firstPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="views != null" >
+        views = #{views,jdbcType=INTEGER},
+      </if>
+      <if test="appreciation != null" >
+        appreciation = #{appreciation,jdbcType=INTEGER},
+      </if>
+      <if test="shareStatement != null" >
+        share_statement = #{shareStatement,jdbcType=INTEGER},
+      </if>
+      <if test="commentabled != null" >
+        commentabled = #{commentabled,jdbcType=INTEGER},
+      </if>
+      <if test="published != null" >
+        published = #{published,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null" >
+        recommend = #{recommend,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pan.pojo.Blog" >
+    update blog
+    set uid = #{uid,jdbcType=INTEGER},
+      typeid = #{typeid,jdbcType=INTEGER},
+      tagids = #{tagids,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      first_picture = #{firstPicture,jdbcType=VARCHAR},
+      views = #{views,jdbcType=INTEGER},
+      appreciation = #{appreciation,jdbcType=INTEGER},
+      share_statement = #{shareStatement,jdbcType=INTEGER},
+      commentabled = #{commentabled,jdbcType=INTEGER},
+      published = #{published,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=VARCHAR},
+      recommend = #{recommend,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pan.pojo.Blog" >
+    update blog
+    set uid = #{uid,jdbcType=INTEGER},
+      typeid = #{typeid,jdbcType=INTEGER},
+      tagids = #{tagids,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      first_picture = #{firstPicture,jdbcType=VARCHAR},
+      views = #{views,jdbcType=INTEGER},
+      appreciation = #{appreciation,jdbcType=INTEGER},
+      share_statement = #{shareStatement,jdbcType=INTEGER},
+      commentabled = #{commentabled,jdbcType=INTEGER},
+      published = #{published,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=VARCHAR},
+      recommend = #{recommend,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByTitleLike" parameterType="com.pan.pojo.Blog" resultMap="BaseResultMap">
+    select *
+    from blog
+    <where>
+      <if test="recommend!= null and recommend== 1">
+        and recommend = #{recommend}
+      </if>
+      <if test="typeid!= null and typeid!= ''">
+        and typeid = #{typeid}
+      </if>
+      <if test="title!= null and title!= ''">
+        and title Like "%"#{title}"%"
+      </if>
+    </where>
+  </select>
+
+  <select id="selectBlogByTimeDesc" parameterType="com.pan.pojo.Blog" resultMap="BaseResultMap">
+    select *
+    from blog
+    <where>
+      <if test="recommend!= null and recommend== 1">
+        and recommend = #{recommend}
+      </if>
+      <if test="typeid!= null and typeid!= ''">
+        and typeid = #{typeid}
+      </if>
+      <if test="title!= null and title!= ''">
+        and title Like "%"#{title}"%"
+      </if>
+      <if test="tagids!= null and tagids!= ''">
+        AND tagids Like "%"#{tagids}"%"
+      </if>
+    </where>
+    Order By update_time Desc
+  </select>
+
+  <select id="selectRecommendBlogsOrderByViews" parameterType="com.pan.pojo.Blog" resultMap="BaseResultMap">
+    select id,title
+    from blog
+    WHERE recommend = 1
+    Order By views Desc
+  </select>
+
+  <select id="selectAllYears" parameterType="com.pan.pojo.Blog" resultType="string">
+   select DATE_FORMAT(update_time,'%Y') as year
+   from blog
+   Group by YEAR
+   order by year desc;
+  </select>
+
+  <select id="selectBolyGroupByYear" parameterType="string" resultMap="BaseResultMap">
+    SELECT
+	*
+    FROM
+        blog
+    WHERE
+        DATE_FORMAT(update_time, '%Y') = #{year}
+    ORDER BY
+        update_time DESC;
+  </select>
+
+</mapper>

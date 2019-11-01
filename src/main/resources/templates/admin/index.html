@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客管理</title>
+    <link rel="stylesheet" href="../../static/semantic/semantic.min.css" th:href="@{/semantic/semantic.min.css}">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+</head>
+<body>
+
+<!--导航-->
+<nav th:replace="admin/_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small"></nav>
+
+
+<!--中间内容-->
+<div class="m-container-small m-padded-tb-big">
+    <div class="ui container">
+        <div class="ui success large  message">
+            <h3>Hi,<span th:text="${session.user.nickname}">IrAts</span></h3>
+            <p>欢迎登录！</p>
+        </div>
+
+        <img src="../../static/images/2.png" th:src="@{${session.user.avatar}}" alt="" class="ui rounded bordered fluid image">
+    </div>
+</div>
+
+<br>
+<br>
+
+<!--底部footer-->
+<footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive"></footer>
+
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="../../static/jquery3.2.0/dist/jquery.min.js" th:src="@{/jquery3.2.0/dist/jquery.min.js}"></script>
+<script src="../../static/semantic/semantic.min.js" th:src="@{/semantic/semantic.min.js}"></script>
+<!--/*/</th:block>/*/-->
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+
+</script>
+</body>
+</html>

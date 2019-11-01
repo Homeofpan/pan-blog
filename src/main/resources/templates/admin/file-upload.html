@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片上传</title>
+    <link rel="stylesheet" href="../../static/semantic/semantic.min.css" th:href="@{/semantic/semantic.min.css}">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="../../static/bootstrap-fileinput/css/bootstrap-fileinput.css" th:href="@{/bootstrap-fileinput/css/bootstrap-fileinput.css}">
+    <script src="../../static/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+    <script src="../../static/bootstrap-fileinput/js/bootstrap-fileinput.js" th:src="@{/bootstrap-fileinput/js/bootstrap-fileinput.js}"></script>
+</head>
+<body>
+
+<!--导航-->
+<nav th:replace="admin/_fragments :: menu(3)"
+     class="ui inverted attached segment m-padded-tb-mini m-shadow-small"></nav>
+
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" th:href="@{/admin/file-upload}" class="teal active item" target="_blank">图片</a>
+            <a href="#" th:href="@{/admin/blogs/input}" class=" item">发布</a>
+            <a href="#" th:href="@{/admin/blogs}" class="item">列表</a>
+        </div>
+    </div>
+</div>
+
+<!--中间内容-->
+<div class="m-container-small m-padded-tb-big">
+    <div class="ui container">
+        <form action="/admin/fileupload" method="post" id="uploadForm" enctype="multipart/form-data" class="ui form">
+
+            <div class="ui center aligned container">
+
+                <div class="fileinput fileinput-new" data-provides="fileinput" id="exampleInputUpload">
+                    <div class="fileinput-new thumbnail" style="width: 450px;height: auto;max-height:450px;">
+                        <img id='picImg' style="width: 100%;height: auto;max-width: 450px;"
+                             src="../../static/bootstrap-fileinput/images/noimage.png"
+                             th:src="@{/bootstrap-fileinput/images/noimage.png}" alt=""/>
+                        图片不得大于<font color="red">3M</font>
+                    </div>
+                    <div class="fileinput-preview fileinput-exists thumbnail"
+                         style="max-width: 450px; max-height: 450px;"></div>
+                    <div>
+                        <span class="btn btn-primary btn-file">
+                            <span class="fileinput-new">选择图片</span>
+                            <span class="fileinput-exists">换一张</span>
+                            <input type="file" name="file" id="file" accept="image/gif,image/jpeg,image/x-png"/>
+                        </span>
+                        <a href="javascript:;" class="btn btn-warning fileinput-exists" data-dismiss="fileinput">移除</a>
+                        <button type="submit" id="uploadSubmit" class="btn btn-info" style="height: 36px">保存</button>
+                    </div>
+                    <br>
+                </div>
+
+            </div>
+            <!--<div class="ui center aligned container">
+                <button type="submit" id="uploadSubmit" class="btn btn-info" style="height: 36px">保存</button>
+            </div>-->
+        </form>
+
+        <br>
+        <div class="ui center aligned container" th:if="${FilePath}!=''">
+            <div class="ui left labeled input">
+                <label class="ui teal basic label">图片地址</label>
+                <input type="text" th:fragment="blogList" placeholder="生成的图片地址" th:value="${FilePath}"
+                       style="width: 400px;" id="textAreas" onfocus="copyUrl2()">
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<!--底部footer-->
+<footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive"></footer>
+
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="../../static/jquery3.2.0/dist/jquery.min.js" th:src="@{/jquery3.2.0/dist/jquery.min.js}"></script>
+<script src="../../static/semantic/semantic.min.js" th:src="@{/semantic/semantic.min.js}"></script>
+<!--/*/</th:block>/*/-->
+
+<script>
+
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+
+
+    function copyUrl2()
+    {
+        var Url2=document.getElementById("textAreas");
+        Url2.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        Url2.blur();
+        alert("已复制");
+    }
+
+</script>
+</body>
+</html>

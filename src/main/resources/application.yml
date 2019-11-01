@@ -1,0 +1,21 @@
+#设置生产环境
+spring:
+  profiles:
+    active: dev
+  thymeleaf:
+    mode: HTML
+  data:
+    solr:
+      host: http://192.168.147.131:8081/solr/my_core
+
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  type-aliases-package: com.pan.pojo
+
+fdfs:
+  so-timeout: 3000
+  connect-timeout: 2000
+  thumbImage:
+    width: 150
+    height: 150
+  tracker-list: 106.15.204.187:22122

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我</title>
+    <link rel="stylesheet" href="../static/semantic/semantic.min.css" th:href="@{/semantic/semantic.min.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+</head>
+<body>
+
+<!--导航-->
+<nav th:replace="_fragments :: menu(5)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small"></nav>
+
+<!--中间内容-->
+<div class="m-container m-padded-tb-big">
+    <div class="ui container">
+
+        <div class="ui stackable grid">
+            <div class="eleven wide column">
+                <div class="ui segment">
+                    <img src="../static/images/1.png" th:src="@{/images/1.png}" alt="" class="ui rounded image">
+                </div>
+            </div>
+            <div class="five wide column">
+                <div class="ui top attached segment">
+                    <div class="ui header">关于我</div>
+                </div>
+                <div class="ui attached segment">
+                    <p class="m-text">pantao</p>
+                    <p class="m-text">这人有点东西<br>热爱学习...</p>
+                </div>
+                <div class="ui attached segment">
+                    <div class="ui orange basic left pointing label">编程</div>
+                    <div class="ui orange basic left pointing label">运动</div>
+                </div>
+                <div class="ui attached segment">
+                    <div class="ui teal basic left pointing label m-margin-tb-tiny">Java</div>
+                    <div class="ui teal basic left pointing label m-margin-tb-tiny">spring</div>
+                    <div class="ui teal basic left pointing label m-margin-tb-tiny">MYSQL</div>
+                    <div class="ui teal basic left pointing label m-margin-tb-tiny">...</div>
+                </div>
+                <div class="ui bottom attached segment">
+                    <a href="https://github.com/Homeofpan" class="ui circular icon button"><i class="github icon"></i></a>
+                    <a href="#" class="ui wechat circular icon button"><i class="weixin icon"></i></a>
+                    <a href="#" class="ui qq circular icon button" data-content="949773099"
+                       data-position="bottom center"><i class="qq icon"></i></a>
+                </div>
+
+                <div class="ui wechat-qr flowing popup transition hidden">
+                    <img src="../static/images/code.png" th:src="@{/images/code.png}" alt="" class="ui rounded image" style="width: 110px">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<br>
+<br>
+<!--底部footer-->
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive"></footer>
+
+
+<!--/*/<th:block th:replace="_fragments :: script">/*/-->
+<script src="../static/jquery3.2.0/dist/jquery.min.js" th:src="@{jquery3.2.0/dist/jquery.min.js}"></script>
+<script src="../static/semantic/semantic.min.js" th:src="/semantic/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.wechat').popup({
+        popup: $('.wechat-qr'),
+        position: 'bottom center'
+    });
+    $('.qq').popup();
+
+</script>
+</body>
+</html>
