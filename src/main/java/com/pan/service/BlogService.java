@@ -37,6 +37,9 @@ public interface BlogService {
     //获取总的博客记录数
     int CountBlogNum(Blog blog);
 
+    //访问一次博客的访问量加1
+    Integer incrBlogViews(Blog blog);
+
 
 
 }

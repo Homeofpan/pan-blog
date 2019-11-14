@@ -1,6 +1,7 @@
 package com.pan.service.impl;
 
 import com.pan.dao.BlogMapper;
+import com.pan.exception.NotFoundException;
 import com.pan.pojo.Blog;
 import com.pan.pojo.BlogByYear;
 import com.pan.pojo.BlogExample;
@@ -127,6 +128,21 @@ public class BlogServiceImpl implements BlogService{
         example.createCriteria();
         int i = blogMapper.countByExample(example);
         return i;
+    }
+
+    @Transactional
+    @Override
+    public Integer incrBlogViews(Blog blog) {
+        if (blog == null) {
+            throw new  NotFoundException("资源没找到");
+        }
+        //获取当前访问的博客的访问量
+        Integer views = blog.getViews();
+        //加一操作
+        Integer newViews = ++views;
+        blog.setViews(newViews);
+        blogMapper.updateByPrimaryKeySelective(blog);
+        return newViews;
     }
 
 }

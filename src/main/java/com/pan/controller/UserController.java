@@ -59,7 +59,7 @@ public class UserController {
     @GetMapping("/logout")
     public ModelAndView userLogout(HttpSession session, ModelAndView mv) {
         session.removeAttribute("user");
-        mv.setViewName("redirect:/index");
+        mv.setViewName("redirect:login");
         return mv;
     }
 }

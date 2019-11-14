@@ -96,6 +96,10 @@ public class IndexController {
         if (blog == null) {
             throw new NotFoundException("资源没找到");
         }
+        //动态变化访问量
+        Integer views = blogService.incrBlogViews(blog);
+        blog.setViews(views);
+        solrService.saveBlogToSolr(blog);
         blog.setContent(MarkdownUtils.markdownToHtmlExtensions(blog.getContent()));
         blog.setType(typeService.getTypeById(blog.getTypeid()));
         blog.setUser(userService.findUserById(blog.getUid()));
